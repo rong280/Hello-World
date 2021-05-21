@@ -8,12 +8,12 @@
   "stats": {},
   "inbounds": [
     {
-      "port": 65530,
+      "port": PORT,
       "protocol": "vmess",
       "settings": {
         "clients": [
           {
-            "id": "a0000373-56d5-44bd-946a-5d316789a666",
+            "id": "UUID",
             "alterId": 32
           }
         ]
@@ -23,7 +23,7 @@
         "network": "ws",
         "security": "none",
         "wsSettings": {
-          "path": "/opendoor"
+          "path": "WEBPATH"
         }
       },
       "listen": "127.0.0.1"
