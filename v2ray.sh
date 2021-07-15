@@ -168,19 +168,21 @@ vmess(){
 	ID=$(jq -r '.inbounds[0].settings.clients[0].id' ${V_CONF})
 	ALTERID=$(jq -r '.inbounds[0].settings.clients[0].alterId' ${V_CONF})
 	
-	vmess=$(echo -e "{
-	  \"v\": \"2\",
-	  \"ps\": \"Singapore\",
-	  \"add\": \"$IP\",
-	  \"port\": \"$PORT\",
-	  \"id\": \"$ID\",
-	  \"aid\": \"$ALTERID\",
-	  \"net\": \"tcp\",
-	  \"type\": \"none\",
-	  \"host\": \"\",
-	  \"path\": \"\",
-	  \"tls\": \"\"
-	}" | echo vmess://$(base64 -w 0))
+	vmess=$(cat <<-EOF
+	{
+	  "v": "2",
+	  "ps": "Singapore",
+	  "add": "$IP",
+	  "port": "$PORT",
+	  "id": "$ID",
+	  "aid": "$ALTERID",
+	  "net": "tcp",
+	  "type": "none",
+	  "host": "",
+	  "path": "",
+	  "tls": ""
+	}
+	EOF | echo vmess://$(base64 -w 0))
 }
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
