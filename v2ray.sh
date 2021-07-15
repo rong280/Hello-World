@@ -168,7 +168,7 @@ vmess(){
 	ID=$(jq -r '.inbounds[0].settings.clients[0].id' ${V_CONF})
 	ALTERID=$(jq -r '.inbounds[0].settings.clients[0].alterId' ${V_CONF})
 	
-	vmess=$(cat <<-EOF
+	vmess=vmess://$(base64 -w 0 <<-EOF
 	{
 	  "v": "2",
 	  "ps": "Singapore",
@@ -182,7 +182,8 @@ vmess(){
 	  "path": "",
 	  "tls": ""
 	}
-	EOF | echo vmess://$(base64 -w 0))
+	EOF
+	)
 }
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
