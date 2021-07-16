@@ -4,56 +4,72 @@
     "error": "/var/log/v2ray/error.log",
     "loglevel": "warning"
   },
-  "dns": {},
+
   "stats": {},
-  "inbounds": [
-    {
-      "port": PORT,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "UUID",
-            "alterId": 32
+  "api": {
+      "tag": "api",
+      "services": [
+          "StatsService"
+      ]
+  },
+  "policy": {
+      "levels": {
+          "1": {
+              "statsUserUplink": true,
+              "statsUserDownlink": true
           }
-        ]
       },
-      "tag": "in-0",
-      "streamSettings": {
-        "network": "ws",
-        "security": "none",
-        "wsSettings": {
-          "path": "WEBPATH"
-        }
-      },
-      "listen": "127.0.0.1"
-    }
+      "system": {
+          "statsInboundUplink": true,
+          "statsInboundDownlink": true,
+          "statsOutboundUplink": true,
+          "statsOutboundDownlink": true
+      }
+  },
+
+  "inbounds": [
+      {
+          "port": 63280,
+          "protocol": "vmess",
+          "settings": {
+              "clients": [
+                  {
+                      "email": "user1",
+                      "id": "33333333-5555-222222222-111111111111",
+                      "level": 1,
+                      "alterId": 10
+                  }
+              ]
+          }
+     },
+     {
+         "listen": "127.0.0.1",
+         "port": 54321,
+         "protocol": "dokodemo-door",
+         "settings": {
+             "address": "127.0.0.1"
+         },
+         "tag": "api"
+     }
   ],
   "outbounds": [
-    {
-      "tag": "direct",
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "tag": "blocked",
-      "protocol": "blackhole",
-      "settings": {}
-    }
+      {
+          "tag": "direct",
+          "protocol": "freedom",
+          "settings": {}
+      }
   ],
   "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "geoip:private"
-        ],
-        "outboundTag": "blocked"
-      }
-    ]
-  },
-  "policy": {},
-  "reverse": {},
-  "transport": {}
+      "rules": [
+          {
+              "inboundTag": [
+                  "api"
+              ],
+              "outboundTag": "api",
+              "type": "field",
+              "ip": ["geoip:private"]
+         }
+      ],
+      "domainStrategy": "AsIs"
+  }
 }
