@@ -2,7 +2,8 @@
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
-IP=$(curl -s --connect-timeout 2 ifconfig.co)
+IP=$(curl -s ifconfig.co)
+ADD=$(hostname)
 PORT=65530
 UUID=$(uuidgen)
 WEBPATH=/opendoor
@@ -171,7 +172,7 @@ vmess(){
 	vmess=vmess://$(base64 -w 0 <<-EOF
 	{
 	  "v": "2",
-	  "ps": "Singapore",
+	  "ps": "$ADD",
 	  "add": "$IP",
 	  "port": "$PORT",
 	  "id": "$ID",
